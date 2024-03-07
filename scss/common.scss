@@ -1,0 +1,37 @@
+.al-button {
+  width: auto;
+  height: auto;
+  // padding: 8px 10px;
+  color: #606266;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  background-color: #fff;
+  padding: 0px 12px;
+  cursor: pointer;
+  transition: .28s ease;
+}
+
+.al-button+.al-button {
+  margin-right: 12px;
+}
+
+.btn_primary {
+  color: white;
+  border: none;
+  background-color: #409eff;
+  transition: .28s ease;
+  // border-color: #409eff;
+
+  &:hover {
+    background-color: #79bbff;
+    transition: .28s ease;
+  }
+}
+
+.btn_default {
+  &:hover {
+    color: #409eff;
+    border-color: #79bbff;
+    transition: .28s ease;
+  }
+}

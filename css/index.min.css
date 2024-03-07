@@ -1,0 +1,39 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+#app .al-container {
+  width: 80%;
+  height: 100%;
+}
+#app .al-container .al-title {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 48px;
+}
+#app .al-container .al-description {
+  margin-bottom: 16px;
+}
+#app .al-container .al-component-box {
+  display: flex;
+}
+#app .al-container .al-component-box .al-comopnent-input {
+  width: 240px;
+  height: 24px;
+  font-size: 14px;
+  border: 1px solid rgb(209, 209, 209);
+  border-radius: 4px;
+  text-indent: 8px;
+}
+#app .al-container .al-component-box .al-button {
+  margin-left: 8px;
+}/*# sourceMappingURL=index.min.css.map */

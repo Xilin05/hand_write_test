@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="./css/common.min.css" />
+    <link rel="stylesheet" href="./css/index.min.css" />
+  </head>
+  <body>
+    <header></header>
+    <main id="app">
+      <div id="al-container" class="al-container"></div>
+    </main>
+    <footer></footer>
+
+    <script src="./js/algorithm.js"></script>
+    <script src="./js/index.js"></script>
+    <script>
+      let slots = [
+        {
+          name: 'fa_arrangement',
+          title: { className: 'al-title', content: ['全排列'] },
+          description: {
+            className: 'al-description',
+            content: [
+              '描述：要求以数组的形式返回字符串参数的所有排列组合',
+              '注意：字符串参数中的字符无重复且仅包含小写字母,返回的排列组合数组不区分顺序'
+            ]
+          },
+          components: {
+            className: 'al-component-box',
+            components: [
+              {
+                name: 'input',
+                // label: '输入',
+                className: 'al-comopnent-input',
+                action: [
+                  { attr: 'blur', name: 'fa_onBlur' },
+                  { attr: 'input', name: 'fa_onInput' }
+                ],
+                value: '',
+                placeholder: '请输入一串字符串'
+              },
+              {
+                name: 'button',
+                label: '执行',
+                className: 'al-button btn_primary',
+                action: [{ attr: 'click', name: 'execute', param: '' }]
+              },
+              {
+                name: 'button',
+                label: '重置',
+                className: 'al-button btn_default',
+                action: [{ attr: 'click', name: 'reset', param: '' }]
+              }
+            ]
+          },
+          result: { className: 'fa_arrangement al-ouput', content: [] }
+        }
+      ]
+
+      // 字符串映射函数
+      let enumAction = {
+        fa_arrangement: {
+          fa_onBlur: fa_onBlur,
+          fa_onInput: fa_onInput,
+          execute: execute,
+          reset: reset
+        }
+      }
+      // 创建组件方法
+      function createComponent(name, config) {
+        // 需要先创建一个父节点
+        let create_father = document.createElement('div')
+        create_father.className = config?.className
+        // create_father.innerHTML = ``
+
+        config?.components?.forEach(component => {
+          // 创建一个子节点
+          let create_component = document.createElement(component?.name)
+          create_component.className = component?.className
+
+          if (component?.label) {
+            create_component.innerHTML = component?.label
+          }
+
+          if (component?.placeholder)
+            create_component?.setAttribute(
+              'placeholder',
+              component?.placeholder
+            )
+
+          if (component?.action) {
+            component?.action?.forEach(item => {
+              create_component.addEventListener(item.attr, () =>
+                enumAction?.[name]?.[item.name]?.(
+                  create_father?.children?.[0],
+                  document.getElementsByClassName(name)?.[0]
+                )
+              )
+            })
+          }
+
+          // 子节点塞进父节点
+          create_father.appendChild(create_component)
+        })
+
+        // 父节点返回
+        return create_father
+      }
+
+      // 创建普通节点
+      function defaultCreate(name, config) {
+        // 创建新的div节点
+        let create_div = document.createElement('div')
+        // 设置一些属性
+        create_div.className = config.className
+        create_div.innerHTML = config?.content?.join('<br>') || '-'
+
+        // 返回该节点
+        return create_div
+      }
+
+      // 选择一个主要的容器节点
+      let alContainer = document.getElementById('al-container')
+      // 创建一个文档片段
+      let fragment = document.createDocumentFragment()
+
+      // 遍历配置对象，生成dom节点
+      slots.forEach(slot => {
+        // 遍历一下属性
+        for (const key in slot) {
+          if (typeof slot?.[key] != 'object') {
+            continue
+          }
+          // 分支逻辑
+          switch (key) {
+            case 'components':
+              fragment.appendChild(createComponent(slot?.name, slot?.[key]))
+
+              break
+
+            default:
+              fragment.appendChild(defaultCreate(slot?.name, slot?.[key]))
+          }
+        }
+      })
+
+      // 在容器中插入文档
+      alContainer.appendChild(fragment)
+
+      // setTimeout(() => {
+      //   // 插入十万条数据
+      //   const total = 1000
+      //   // 一次插入 20 条，如果觉得性能不好就减少
+      //   const once = 200
+      //   // 渲染数据总共需要几次
+      //   const loopCount = total / once
+      //   let countOfRender = 0
+      //   let ul = document.querySelector('ul')
+      //   function add() {
+      //     // 优化性能，插入不会造成回流
+      //     const fragment = document.createDocumentFragment()
+      //     for (let i = 0; i < once; i++) {
+      //       const li = document.createElement('li')
+      //       li.innerText = Math.floor(Math.random() * total)
+      //       fragment.appendChild(li)
+      //     }
+      //     ul.appendChild(fragment)
+      //     countOfRender += 1
+      //     loop()
+      //   }
+      //   function loop() {
+      //     if (countOfRender < loopCount) {
+      //       window.requestAnimationFrame(add)
+      //     }
+      //   }
+      //   loop()
+      // }, 0)
+    </script>
+  </body>
+</html>
